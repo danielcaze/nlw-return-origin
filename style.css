@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&display=swap');
-
 * {
     margin: 0;
     padding: 0;
@@ -12,7 +11,17 @@
     --primary-color: hsla(170, 100%, 26%, 1);
     --headline: hsla(210, 11%, 15%, 1);
     --paragraph: hsla(210, 9%, 31%, 1);
+    
+    --brand-beige: hsla(39, 100%, 97%, 1);
+    --brand-light: hsla(148, 23%, 89%, 1);
 
+    --nav-height: 7.2rem; /* usar variaveis pra mudar só uma vez e alterar tudo na página */
+}
+
+html,
+body{
+    width: 100%;
+    height: 100%;
 }
 
 body {
@@ -20,27 +29,54 @@ body {
     font-size: 1.6rem; /* reseta para o padrão 16px */
 
     text-align: center;
+
+    overflow: overlay;
+}
+
+.wrapper {
+    width: 37.5rem;
+    margin-inline: auto;
+    padding-inline: 2.4rem;
+}
+
+ul {
+    list-style: none;
+}
+
+/*=== HEADER === === === === === === === === === === === === === === === */
+
+header::before { /* antes do conteudo (antes do 1 elemento) */
+    content: "";
+    width: 100%;
+    height: calc(108rem + var(--nav-height));
+
+    background-color: var(--brand-light);
+
+    display: block; /* block recebe tamanho, != do inline */
+    position: absolute;
+    top: 0; /* ao usar position absolute, posso usar top, left, bottom, right... */
+    left: 0;
+    z-index: -1;
 }
 
 header {
-    width: 37.5rem;
-    margin: 4.1rem auto 0 auto;
+    margin-top: calc(4.1rem + var(--nav-height));
 }
 
-h4 {
+header h4 {
     font-size: 1.4rem; /* 14px */
     color: var(--primary-color);
     margin-bottom: 1.6rem;
 }
 
-h1 {
+header h1 {
     font-size: 3.4rem;
     color: var(--headline);
     line-height: 130%;
     margin-bottom: 2.4rem;
 }
 
-p {
+header p {
     font-size: 1.8rem;
     line-height: 150%;
     font-weight: 400;
@@ -48,13 +84,13 @@ p {
     margin-bottom: 3.2rem;
 }
 
-button {
+header button {
     background: var(--primary-color);
 
     border: none;
     border-radius: 4rem;
     
-    margin: 0 auto 3rem auto;
+    margin-bottom: 6rem;
     
     height: 6.2rem;
     width: 26.3rem;
@@ -68,4 +104,179 @@ button {
     align-items: center;
     justify-content: center;
     gap: 1.6rem;
+
+    margin-inline: auto;
+}
+
+header img {
+    width: 26.4rem; /* defino a largura pra imagem acompanhar a mudança de tamanho na fonte, deixando acessivel */
+    display: block;
+    margin-inline: auto;
+    object-fit: cover;
+    object-position: 0 2rem;
+}
+
+.stats {
+    width: 32.7rem;
+    padding-block: 4rem; /* padding top + padding bottom */
+    margin-inline: auto; /* margin left + right */
+
+    background: var(--brand-beige);
+    border: 1px solid var(--brand-light);
+    border-radius: 0.6rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6rem;
+}
+
+.stat h3 {
+    font-size: 4.8rem;
+    color: var(--headline);
+    line-height: 130%;
+
+    margin-bottom: .4rem;
+}
+
+.stat p {
+    margin: 0;
+    color: var(--primary-color);
+
+    line-height: 150%;
+}
+
+/*=== NAV === === === === === === === === === === === === === === === */
+nav {
+    display: flex;
+    
+    height: var(--nav-height);
+    
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+nav .wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+nav.scroll {
+    background: var(--primary-color);
+    width: 100vw;
+    position: fixed;
+    top: 0;
+}
+
+nav.scroll svg:first-child path{
+    fill: white;
+}
+
+nav.scroll button path{
+    stroke: white;
+}
+
+nav button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+/*=== MENU_EXPANDED === === === === === === === === === === === === === === */
+body.menu_expanded {
+    overflow: hidden;
+}
+
+body.menu_expanded > *:not(nav) { /* tudo exceto nav */
+    display: none;
+}
+
+
+.menu,
+.close_menu,
+body.menu_expanded .open_menu {
+    opacity: 0;
+    visibility: hidden;
+}
+
+body.menu_expanded .menu,
+body.menu_expanded .close_menu {
+    opacity: 1;
+    visibility: visible;
+}
+
+body.menu_expanded .menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: var(--primary-color);
+    
+    width: 100vw;
+    height: 100vh;
+
+    padding-top: var(--nav-height);
+}
+
+body.menu_expanded nav {
+    position: relative;
+}
+
+.menu ul:first-child {
+    display: flex;
+    flex-direction: column;
+    gap: 4.8rem;
+
+    margin-top: 6rem;
+
+    font-weight: 700;
+    font-size: 2.4rem;
+    line-height: 3.1rem;
+}
+
+.menu ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+.menu .button {
+    background: #fff;
+    border-radius: 4rem;
+    font-weight: 700;
+    font-size: 1.8rem;
+    line-height: 2.3rem;
+    text-transform: uppercase;
+    text-decoration: none;
+
+    color: var(--primary-color);
+
+    display: inline-block;
+    padding: 1.6rem 3.2rem;
+    
+    margin-top: 4.8rem;
+    margin-bottom: 8rem;
+
+}
+
+.social_links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3.2rem;
+}
+
+body.menu_expanded .logo,
+body.menu_expanded nav button {
+    position: relative;
+    z-index: 100;
+}
+
+body.menu_expanded .logo path {
+    fill: white;
+}
+
+body.menu_expanded button path {
+    stroke: white;
 }
