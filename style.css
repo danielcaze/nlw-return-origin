@@ -14,8 +14,14 @@
     
     --brand-beige: hsla(39, 100%, 97%, 1);
     --brand-light: hsla(148, 23%, 89%, 1);
+    
+    --bg-light: hsla(180, 14%, 97%, 1);
 
     --nav-height: 7.2rem; /* usar variaveis pra mudar só uma vez e alterar tudo na página */
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 html,
@@ -31,6 +37,8 @@ body {
     text-align: center;
 
     overflow: overlay;
+
+    background: var(--bg-light);
 }
 
 .wrapper {
@@ -43,119 +51,57 @@ ul {
     list-style: none;
 }
 
-/*=== HEADER === === === === === === === === === === === === === === === */
-
-header::before { /* antes do conteudo (antes do 1 elemento) */
-    content: "";
-    width: 100%;
-    height: calc(108rem + var(--nav-height));
-
-    background-color: var(--brand-light);
-
-    display: block; /* block recebe tamanho, != do inline */
-    position: absolute;
-    top: 0; /* ao usar position absolute, posso usar top, left, bottom, right... */
-    left: 0;
-    z-index: -1;
+img {
+    max-width: 100%;
 }
 
-header {
-    margin-top: calc(4.1rem + var(--nav-height));
+section {
+    padding-block: 10rem;
 }
 
-header h4 {
-    font-size: 1.4rem; /* 14px */
-    color: var(--primary-color);
-    margin-bottom: 1.6rem;
-}
-
-header h1 {
+section header h1 {
     font-size: 3.4rem;
     color: var(--headline);
     line-height: 130%;
-    margin-bottom: 2.4rem;
 }
 
-header p {
-    font-size: 1.8rem;
-    line-height: 150%;
-    font-weight: 400;
-    color: var(--paragraph);
-    margin-bottom: 3.2rem;
+section header h2 {
+    font-size: 3rem;
+    line-height: 3.9rem;
+
+    color: var(--headline);
 }
 
-header button {
-    background: var(--primary-color);
-
-    border: none;
-    border-radius: 4rem;
-    
-    margin-bottom: 6rem;
-    
-    height: 6.2rem;
-    width: 26.3rem;
- 
-    color: #fff;
-    text-transform: uppercase;
+section header h4 {
     font-size: 1.4rem;
     font-weight: 700;
-    
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1.6rem;
-
-    margin-inline: auto;
-}
-
-header img {
-    width: 26.4rem; /* defino a largura pra imagem acompanhar a mudança de tamanho na fonte, deixando acessivel */
-    display: block;
-    margin-inline: auto;
-    object-fit: cover;
-    object-position: 0 2rem;
-}
-
-.stats {
-    width: 32.7rem;
-    padding-block: 4rem; /* padding top + padding bottom */
-    margin-inline: auto; /* margin left + right */
-
-    background: var(--brand-beige);
-    border: 1px solid var(--brand-light);
-    border-radius: 0.6rem;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 6rem;
-}
-
-.stat h3 {
-    font-size: 4.8rem;
-    color: var(--headline);
-    line-height: 130%;
-
-    margin-bottom: .4rem;
-}
-
-.stat p {
-    margin: 0;
+    line-height: 150%;
+    letter-spacing: 0.08rem;
     color: var(--primary-color);
 
-    line-height: 150%;
+    text-transform: uppercase;
+
+    margin-bottom: 1.6rem;
 }
 
+section .content p {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+
+    color: var(--paragraph);
+}
 /*=== NAV === === === === === === === === === === === === === === === */
 nav {
     display: flex;
-    
+
     height: var(--nav-height);
-    
+
     position: fixed;
     top: 0;
-    left: 50%;
-    transform: translateX(-50%);
+    width: 100vw;
+
+    z-index: 100;
 }
 
 nav .wrapper {
@@ -166,16 +112,14 @@ nav .wrapper {
 
 nav.scroll {
     background: var(--primary-color);
-    width: 100vw;
-    position: fixed;
-    top: 0;
+
 }
 
-nav.scroll svg:first-child path{
+nav.scroll .logo path {
     fill: white;
 }
 
-nav.scroll button path{
+nav.scroll button path {
     stroke: white;
 }
 
@@ -190,10 +134,10 @@ body.menu_expanded {
     overflow: hidden;
 }
 
-body.menu_expanded > *:not(nav) { /* tudo exceto nav */
-    display: none;
+body.menu_expanded>*:not(nav) {
+    /* tudo exceto nav */
+    visibility: hidden;
 }
-
 
 .menu,
 .close_menu,
@@ -208,20 +152,23 @@ body.menu_expanded .close_menu {
     visibility: visible;
 }
 
+.menu {
+    transform: translateY(100%);
+}
+
 body.menu_expanded .menu {
     position: fixed;
     top: 0;
     left: 0;
     background: var(--primary-color);
-    
+
     width: 100vw;
     height: 100vh;
 
     padding-top: var(--nav-height);
-}
 
-body.menu_expanded nav {
-    position: relative;
+    transition: transform 300ms;
+    transform: translateY(0);
 }
 
 .menu ul:first-child {
@@ -254,7 +201,7 @@ body.menu_expanded nav {
 
     display: inline-block;
     padding: 1.6rem 3.2rem;
-    
+
     margin-top: 4.8rem;
     margin-bottom: 8rem;
 
@@ -279,4 +226,155 @@ body.menu_expanded .logo path {
 
 body.menu_expanded button path {
     stroke: white;
+}
+
+/*=== HOME === === === === === === === === === === === === === === === */
+
+#home::before { /* antes do conteudo (antes do 1 elemento) */
+    content: "";
+    width: 100%;
+    height: calc(108rem + var(--nav-height));
+
+    background-color: var(--brand-light);
+
+    display: block; /* block recebe tamanho, != do inline */
+    position: absolute;
+    top: 0; /* ao usar position absolute, posso usar top, left, bottom, right... */
+    left: 0;
+    z-index: -1;
+}
+
+#home {
+    padding-top: calc(4.1rem + var(--nav-height));
+}
+
+#home h4 {
+    margin-bottom: 1.6rem;
+}
+
+#home h1 {
+    margin-bottom: 2.4rem;
+}
+
+#home p {
+    font-size: 1.8rem;
+    line-height: 150%;
+    font-weight: 400;
+    color: var(--paragraph);
+    margin-bottom: 3.2rem;
+}
+
+#home button {
+    background: var(--primary-color);
+
+    border: none;
+    border-radius: 4rem;
+    
+    margin-bottom: 6rem;
+    
+    height: 6.2rem;
+    width: 26.3rem;
+ 
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 1.4rem;
+    font-weight: 700;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.6rem;
+
+    margin-inline: auto;
+}
+
+#home img {
+    width: 26.4rem; /* defino a largura pra imagem acompanhar a mudança de tamanho na fonte, deixando acessivel */
+    display: block;
+    margin-inline: auto;
+    object-fit: cover;
+    object-position: 0 2rem;
+}
+
+#home .stats {
+    width: 32.7rem;
+    padding-block: 4rem; /* padding top + padding bottom */
+    margin-inline: auto; /* margin left + right */
+
+    background: var(--brand-beige);
+    border: 1px solid var(--brand-light);
+    border-radius: 0.6rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6rem;
+}
+
+#home .stat h3 {
+    font-size: 4.8rem;
+    color: var(--headline);
+    line-height: 130%;
+
+    margin-bottom: .4rem;
+}
+
+#home .stat p {
+    margin: 0;
+    color: var(--primary-color);
+
+    line-height: 150%;
+}
+
+
+/*=== SERVICES === === === === === === === === === === === === === === */
+
+#services header h4 {
+    font-size: 1.4rem;
+    line-height: 150%;
+    letter-spacing: 0.08rem;
+
+    text-transform: uppercase;
+
+    color: var(--primary-color);
+
+    margin-bottom: 1.6rem;
+}
+
+#services header h2 {
+    margin-bottom: 6rem;
+}
+
+#services .cards {
+    display: flex;
+    flex-direction: column;
+    gap: 3.2rem;
+}
+
+#services .card {
+    padding: 2.4rem;
+    text-align: left;
+
+    background: hsl(0, 0, 100);
+    border: 1px solid var(--brand-light);
+    border-radius: .6rem;
+}
+
+#services .card h3 {
+    margin-block: 1.6rem;
+}
+
+/*=== ABOUT === === === === === === === === === === === === === === */
+#about {
+    text-align: left;
+    background: var(--brand-beige);
+}
+
+#about h2 {
+    margin-bottom:2.4rem;
+}
+
+#about p {
+    margin-top: 2.4rem;
+    margin-bottom: 6rem;
 }
