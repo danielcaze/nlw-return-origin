@@ -1,13 +1,22 @@
 const navigation = document.querySelector("#navigation")
 const body = document.querySelector("body")
 const buttonOpn = document.querySelector(".open_menu")
+const backToTop = document.querySelector("#backToTop");
 
 document.addEventListener("scroll", () => {
-    if(scrollY > 0)
-        navigation.classList.add('scroll')
-    else
-        navigation.classList.remove('scroll')
+   showNavOnScoll(); 
+   backToTopButton();
 })
+
+showNavOnScoll = () => {
+    if (scrollY > 0) navigation.classList.add("scroll");
+    else navigation.classList.remove("scroll");
+}
+
+backToTopButton = () => {
+    if (scrollY > 500) backToTop.classList.add("show");
+    else backToTop.classList.remove("show");
+}
 
 buttonOpn.addEventListener("click", () => {
     body.classList.add("menu_expanded")
