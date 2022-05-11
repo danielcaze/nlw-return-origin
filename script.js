@@ -1,14 +1,40 @@
-const navigation = document.querySelector("#navigation")
 const body = document.querySelector("body")
 const buttonOpn = document.querySelector(".open_menu")
-const backToTop = document.querySelector("#backToTop");
 
-document.addEventListener("scroll", () => {
-   showNavOnScoll(); 
+log = e => console.log(e)
+
+window.addEventListener("scroll", () => {
+   showNavOnScroll(); 
    backToTopButton();
+   activateMenuAtCurrentSection(home);
+   activateMenuAtCurrentSection(services);
+   activateMenuAtCurrentSection(about);
+   activateMenuAtCurrentSection(contact);
 })
 
-showNavOnScoll = () => {
+
+activateMenuAtCurrentSection = section => {
+    const targetLine = scrollY + innerHeight / 2
+
+    const sectionTop = section.offsetTop
+    const sectionHeight = section.offsetHeight
+    const sectionEndsAt = sectionTop + sectionHeight
+
+    const nextSectionTopReach = targetLine >= sectionTop
+    const sectionEndTargetLine = sectionEndsAt <= targetLine
+    
+    const sectionBoundaries = !sectionEndTargetLine && nextSectionTopReach
+
+    // DEPOIS VER SE CONSIGO FAZER COM QUERYSELECTOR
+    const sectionId = section.getAttribute('id')
+    const menuElement = document.querySelector(`.menu a[href*=${sectionId}]`);
+
+    menuElement.classList.remove("active");
+    if (sectionBoundaries) menuElement.classList.add("active")
+    if (scrollY == 0) menuElement.classList.remove("active");
+}
+
+showNavOnScroll = () => {
     if (scrollY > 0) navigation.classList.add("scroll");
     else navigation.classList.remove("scroll");
 }
